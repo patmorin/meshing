@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{pat}
+\usepackage{graphicx}
+\usepackage{amsopn}
+\usepackage{paralist}
+
+\DeclareMathOperator{\mfs}{mfs}
+
+\begin{document}
+
+For two points $p,q\in\R^2$, $d(p,q)$ denotes the Euclidean distance from $p$ to $q$. For two point sets $P,Q\subseteq\R^2$, $d(P,Q):=\inf\{d(p,q):p\in P,\,q\in Q\}$.  For a point $p$ and a point set $Q$, $d(p,Q):=d(\{p\},Q)$ and $d(Q,p):=d(Q,\{p\})$.
+
+A \emph{geometric graph} $G$ is a graph whose vertices are points in the plane and whose edges are straight line segments.
+
+
+The \emph{minimum feature size} $\mfs(G)$ of $G$ is the minimum distance between a vertex of $G$ and a non-incident edge of $G$, i.e.,
+\[
+    \mfs(G):=\min\{d(v,xy): v\in V(G),\, xy\in E(G),\, v\not\in\{x,y\}\}
+\]
+
+The following lemma is an easy consequence of the triangle inequality:
+\begin{lem}\lemlabel{perturbation-o}
+    For any non-crossing geometric graph $G$ and any geometric graph $H$ obtained from $G$ by moving each vertex of $G$ a distance of at most $\mfs(G)/3$, $\mfs(H)\ge \mfs(G)/3$.
+\end{lem}
+
+\lemref{perturbation-o} describes the effect of a perturbation of the vertices of $G$ on the minimum feature size. We will also need perturbations that preserve the combinatorial embedding of $G$.
+
+\begin{lem}\lemlabel{perturbation}
+    There exists a constant $\alpha>0$ such that, for any non-crossing geometric graph $G$ and any geometric graph $H$ obtained from $G$ by moving each vertex of $G$ a distance of at most $\alpha\cdot\mfs(G)$, $H$ is also non-crossing and preserves the combinatorial embedding of $G$.
+\end{lem}
+For a particular non-crossing geometric graph $G$, the supremum value $\alpha$ for which $G$ satisifies the condition of \lemref{perturbation} is called the \emph{structural tolerance} of $G$ and has been studied systematically by Abellenas, Hurtado, and Ramos \cite{X}.
+
+We abuse notation slightly and simultaneously treat a simple polygon $P$ as
+\begin{inparaenum}[(i)]
+    \item a closed compact simply connected subset of the plane whose boundary consists of a piecewise linear Jordan curve, and
+    \item a geometric graph consisting of the polygonal cycle that bounds $P$.
+\end{inparaenum}
+
+Refer to \figref{pq}, which illustrates the polygons $P$ and $Q$ and the graph $G$ that are the subject of the following lemma:
+
+\begin{figure}
+    \centering{\includegraphics{pq}}
+    \caption{Illustration of \lemref{nice-graph}.}
+    \figlabel{pq}
+\end{figure}
+
+\begin{lem}\lemlabel{nice-graph}
+    There exists a constant $\beta >0$ such that, for any polygon $P$ with $\mfs(P)\ge 1$, there exists a polygon $Q\subseteq P$, $V(Q)\cap V(P)=\emptyset$ and a mapping $f:V(Q)\to V(P)$ such that the geometric graph $G$ with $V(G):=V(P)\cup V(Q)$ and edge set $E(G):=E(P)\cup E(P')\cup\{vf(v):v\in V(P')\}$ has the following properties:
+    \begin{compactenum}[(P1)]
+        \item $G$ is a non-crossing geometric graph;
+        \item $\mfs(G)\ge \beta$;
+        \item Each internal face of $G$ is either
+        \begin{compactenum}[(i)]
+            \item the interior of $Q$;
+            \item a triangle $xyz$ with $xy\in E(Q)$ and $z\in P$; or
+            \item a quadrilateral $vwxy$ with $vw\in E(Q)$ and $xy\in E(P)$.
+        \end{compactenum}
+    \end{compactenum}
+\end{lem}
+
+We immediately obtain the following result:
+
+\begin{lem}
+    There exists a constant $c>0$ such that, for any polygon $P$ with $\mfs(P)\ge 1$, there exists a polygon $Q$ satisfying the conditions in \lemref{nice-graph} and such that $V(Q)\subseteq\{(ic,jc): i,j\in\Z^2\}$.
+\end{lem}
+
+\begin{proof}
+    Apply \lemref{nice-graph} to obtain the polygon $Q$ and the graph $G$ with $\mfs(G)\ge \beta$.  Let $r:=\min\{\beta/3,\alpha\}$ where $\alpha$ is the constant referred to in \lemref{perturbation}.  Now, any closed disk of radius $r$ contains a point of the grid $C:=\{(ic,jc): i,j\in\Z^2\}$ for any $c\le \sqrt{2}r$.\footnote{To see this, consider the case $c=1$, which claims that any disk of radius $\sqrt{2}/2$ contains a point of the integer grid $\Z^2$.  Indeed, the center $c$ of any such disk is contained in at least one unit square $S$ formed by 4 points of $\Z^2$ and $d(c,v)\le \sqrt{2}/2$ for vertex $v$ of $S$.}
+
+    Therefore, each vertex of $Q$ can be moved to a distinct point of the grid $C$.  By \lemref{perturbation-o}, the resulting graph $G'$ has $\mfs(G')\ge \mfs(G)/3\ge \beta/3$, so $G'$ satisifies (P2) with $\beta'=\beta/3$.  By \lemref{perturbation}, $G'$ and $G$ have the same combinatorial embedding, so $G'$ satisfies (P1) and (P3).  This establishes the lemma for any $0<c\le \sqrt{2}r = \sqrt{2}\min\{\beta/3,\alpha\}$.
+\end{proof}
+
+
+\begin{lem}
+    Let $Q:=abcd$ be a convex quadrilateral with $\mfs(Q)\ge 1$. Then, for at least one $vw\in\{ac, bd\}$, $\mfs(Q\cup vw)\ge 1/2$.
+\end{lem}
+
+\begin{proof}
+    Let $r:=\mfs(Q)$.  If $d(b,ac)\ge r/2$ and $d(d,ac)\ge r/2$, then $Q$ can be triangulated by addding the diagonal $ac$ and the minimum feature size of the resulting triangulation is at least $r/2$, as required.  Therefore, we may assume without of generality that $d(b,ac)< r/2$.  Since $d(a,b)\ge r$ and $d(b,c)\ge r$, this implies that the interior angle $\angle abc\ge 2\pi/3$ ($120^\circ$).
+
+    By the same argument we may assume, without loss of generality that $d(c,bd) < r/2$ and therefore the interior angle $\angle bcd\ge 2\pi/3$.
+
+    It follows that $Q$ contains the rectangle $R$ bounded on one side by $bc$ and the in which the adjacent sides have length $r$.  Let $s$ be the center of $R$ and triangulate $Q$ by adding a vertex to joining $s$ to each vertex of $Q$.  Now, $Q$, $d(s,\partial Q)\ge d(\partial(R))\ge r/2$ since $s$ is the center of $R$ and all sides of $R$ have length at least $r$.
+    It is straightforward to check that $d(b,as)\ge r/2$ and that $d(c,ds)\ge r/2$.  Finally $d(a,bs)=d(a,b)\ge r$ and, similarly $d(d,sc)=d(d,c)\ge r$.  Therefore, $\mfs(Q')\ge r/2$, as required.
+\end{proof}
+
+
+
+\end{document}
